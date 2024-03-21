@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  web:
+    image: nginx:alpine
+    ports:
+      - "8085:80"
+    networks:
+      - webnet
+
+  db:
+    image: postgres:13
+    environment:
+      POSTGRES_DB: testDB
+      POSTGRES_USER: kaphley
+      POSTGRES_PASSWORD: kaphley
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    networks:
+      - webnet
+
+  adminer:
+    image: adminer
+    ports:
+      - "8086:8080"
+    networks:
+      - webnet
+
+networks:
+  webnet:
+
+volumes:
+  db-data:
